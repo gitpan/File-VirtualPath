@@ -15,8 +15,9 @@ CONTENTS
 
 PREFACE
 
-This distribution features the Perl 5 module named "File::VirtualPath".
-
+This distribution features the Perl 5 module named "File::VirtualPath",
+a portable abstraction of a file/dir/url path.
+ 
 All of my modules have complete POD inside of them, so please refer to that for a
 description of the module itself.
 
@@ -74,7 +75,7 @@ this:
 Then you would want to run the included test program to make sure the module is 
 installed correctly.  Call it with:
 
-	perl test.pl
+	perl -w test.pl
 
 Any existing POD is embedded in the module itself.  The Makefile probably 
 extracted it for you in the usual manner, or you can run a POD extractor on it 
@@ -95,7 +96,7 @@ TO DO
 
 AUTHOR
 
-Copyright (c) 1999-2001, Darren R. Duncan. All rights reserved. These modules are
+Copyright (c) 1999-2002, Darren R. Duncan. All rights reserved. These modules are
 free software; you can redistribute them and/or modify them under the same terms
 as Perl itself.  However, I do request that their copyright information remains
 attached to the files.  If you modify this module and redistribute a changed

@@ -9,7 +9,7 @@ File::VirtualPath - Portable abstraction of a file/dir/url path.
 package File::VirtualPath;
 require 5.004;
 
-# Copyright (c) 1999-2001, Darren R. Duncan. All rights reserved. This module is
+# Copyright (c) 1999-2002, Darren R. Duncan. All rights reserved. This module is
 # free software; you can redistribute it and/or modify it under the same terms as
 # Perl itself.  However, I do request that this copyright information remain
 # attached to the file.  If you modify this module and redistribute a changed
@@ -17,7 +17,7 @@ require 5.004;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '1.0001';
+$VERSION = '1.01';
 
 ######################################################################
 
@@ -454,7 +454,7 @@ delimiter appended; otherwise, there is none.
 
 sub path_string {
 	my ($self, $tra) = @_;
-	$tra and $tra = $self->{$KEY_VIR_PATH_DELI};
+	$tra and $tra = $self->{$KEY_VIR_PATH_DELI} or $tra = '';
 	return( $self->_path_ra_to_str( $self->{$KEY_VIR_PATH_ELEM} ).$tra );
 }
 
@@ -472,7 +472,7 @@ delimiter appended; otherwise, there is none.
 
 sub physical_path_string {
 	my ($self, $tra) = @_;
-	$tra and $tra = $self->{$KEY_PHYSICAL_DELI};
+	$tra and $tra = $self->{$KEY_PHYSICAL_DELI} or $tra = '';
 	return( $self->_path_ra_to_phy_str( $self->{$KEY_VIR_PATH_ELEM} ).$tra );
 }
 
@@ -491,7 +491,7 @@ there is none.
 
 sub child_path_string {
 	my ($self, $chg_vec, $tra) = @_;
-	$tra and $tra = $self->{$KEY_VIR_PATH_DELI};
+	$tra and $tra = $self->{$KEY_VIR_PATH_DELI} or $tra = '';
 	return( $self->_path_ra_to_str( $self->child_path( $chg_vec ) ).$tra );
 }
 
@@ -510,7 +510,7 @@ there is none.
 
 sub physical_child_path_string {
 	my ($self, $chg_vec, $tra) = @_;
-	$tra and $tra = $self->{$KEY_PHYSICAL_DELI};
+	$tra and $tra = $self->{$KEY_PHYSICAL_DELI} or $tra = '';
 	return( $self->_path_ra_to_phy_str( $self->child_path( $chg_vec ) ).$tra );
 }
 
@@ -624,6 +624,7 @@ sub current_path_element {
 
 sub _path_str_to_ra {
 	my ($self, $in) = @_;
+	$in ||= '';  # avoid uninitialized value warning
 	return( [split( $self->{$KEY_VIR_PATH_DELI}, $in )] );
 }
 
@@ -707,7 +708,7 @@ __END__
 
 =head1 AUTHOR
 
-Copyright (c) 1999-2001, Darren R. Duncan. All rights reserved. This module is
+Copyright (c) 1999-2002, Darren R. Duncan. All rights reserved. This module is
 free software; you can redistribute it and/or modify it under the same terms as
 Perl itself.  However, I do request that this copyright information remain
 attached to the file.  If you modify this module and redistribute a changed
@@ -719,6 +720,13 @@ make modifications to the module because it doesn't work the way you need, pleas
 send me a copy so that I can roll desirable changes into the main release.
 
 Address comments, suggestions, and bug reports to B<perl@DarrenDuncan.net>.
+
+=head1 CREDITS
+
+Thanks to Baldvin Kovacs <baldvin@fazekas.hu> for alerting me to the
+"uninitialized value" warnings (and offering a patch to fix it) that appear
+when running the test suite with the -w option (fixed in 1.01), and also thanks
+for a patch to the README file documentation, which was applied.
 
 =head1 SEE ALSO
 
