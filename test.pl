@@ -8,7 +8,7 @@
 
 BEGIN { $| = 1; print "1..136\n"; }
 END {print "not ok 1\n" unless $loaded;}
-use File::VirtualPath 1.0;
+use File::VirtualPath 1.0001;
 $loaded = 1;
 print "ok 1\n";
 use strict;

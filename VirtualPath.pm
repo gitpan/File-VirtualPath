@@ -17,7 +17,7 @@ require 5.004;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '1.0';
+$VERSION = '1.0001';
 
 ######################################################################
 
@@ -85,7 +85,7 @@ $VERSION = '1.0';
 		my ($prefs, $project_dir) = @_;
 		my ($lbl_a, $lbl_b, $lbl_c) = ($prefs->{a}, $prefs->{b}, $prefs->{c});
 		my $data_source = $prefs->{'sourcefile'};
-		open( SOURCE, $project_dir->child_path_string( $data_source ) );
+		open( SOURCE, $project_dir->physical_child_path_string( $data_source ) );
 		while( my $line = <SOURCE> ) {
 			my ($a, $b, $c) = split( "\t", $line );
 			print "File contains: $lbl_a='$a', $lbl_b='$b', $lbl_c='$c'\n";
@@ -722,6 +722,6 @@ Address comments, suggestions, and bug reports to B<perl@DarrenDuncan.net>.
 
 =head1 SEE ALSO
 
-perl(1), HTML::Application.
+perl(1), CGI::Portable.
 
 =cut
