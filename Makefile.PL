@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
 	NAME	=> 'File::VirtualPath',
-	VERSION_FROM => 'VirtualPath.pm', # finds $VERSION
+	VERSION_FROM => 'lib/File/VirtualPath.pm', # finds $VERSION
 	PREREQ_PM => {
 	},
 );

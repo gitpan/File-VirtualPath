@@ -1,5 +1,5 @@
 # Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl test.pl'
+# `make test'. After `make install' it should work as `perl t/File-VirtualPath.t'
 
 ######################### We start with some black magic to print on failure.
 
@@ -8,10 +8,14 @@
 
 BEGIN { $| = 1; print "1..136\n"; }
 END {print "not ok 1\n" unless $loaded;}
-use File::VirtualPath 1.0001;
+use File::VirtualPath 1.011;
 $loaded = 1;
 print "ok 1\n";
 use strict;
+use warnings;
+
+# Set this to 1 to see complete result text for each test
+my $verbose = shift( @ARGV ) ? 1 : 0;  # set from command line
 
 ######################### End of black magic.
 
@@ -27,6 +31,9 @@ my $test_num = 1;  # same as the first test, above
 sub result {
 	$test_num++;
 	my ($worked, $detail) = @_;
+	$verbose or 
+		$detail = substr( $detail, 0, 50 ).
+		(length( $detail ) > 47 ? "..." : "");	
 	print "@{[$worked ? '' : 'not ']}ok $test_num $detail\n";
 }
 

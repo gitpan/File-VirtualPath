@@ -1,6 +1,6 @@
 =head1 NAME
 
-File::VirtualPath - Portable abstraction of a file/dir/url path.
+File::VirtualPath - Portable abstraction of a file/dir/url path
 
 =cut
 
@@ -9,15 +9,18 @@ File::VirtualPath - Portable abstraction of a file/dir/url path.
 package File::VirtualPath;
 require 5.004;
 
-# Copyright (c) 1999-2002, Darren R. Duncan. All rights reserved. This module is
-# free software; you can redistribute it and/or modify it under the same terms as
-# Perl itself.  However, I do request that this copyright information remain
-# attached to the file.  If you modify this module and redistribute a changed
-# version then please attach a note listing the modifications.
+# Copyright (c) 1999-2003, Darren R. Duncan.  All rights reserved.  This module
+# is free software; you can redistribute it and/or modify it under the same terms
+# as Perl itself.  However, I do request that this copyright information and
+# credits remain attached to the file.  If you modify this module and
+# redistribute a changed version then please attach a note listing the
+# modifications.  This module is available "as-is" and the author can not be held
+# accountable for any problems resulting from its use.
 
 use strict;
+use warnings;
 use vars qw($VERSION);
-$VERSION = '1.01';
+$VERSION = '1.011';
 
 ######################################################################
 
@@ -41,6 +44,7 @@ $VERSION = '1.01';
 
 	#!/usr/bin/perl
 	use strict;
+	use warnings;
 
 	my $root = "/home/johndoe/projects/aardvark";
 	my $separator = "/";
@@ -55,21 +59,22 @@ $VERSION = '1.01';
 
 	use Aardvark;
 	Aardvark->main( File::VirtualPath->new( $root, $separator ) );
-	
+
 	1;
 
 =head2 Content of fat main program "Aardvark.pm"
 
 	package Aardvark;
 	use strict;
+	use warnings;
 	use File::VirtualPath;
-	
+
 	sub main {
 		my (undef, $project_dir) = @_;
 		my $prefs = &get_prefs( $project_dir->child_path_obj( 'config.pl' ) );
 		&do_work( $prefs, $project_dir );
 	}
-	
+
 	sub get_prefs {
 		my ($project_dir) = @_;
 		my $real_filename = $project_dir->physical_path_string();
@@ -80,7 +85,7 @@ $VERSION = '1.01';
 		};
 		return( $prefs );
 	}
-	
+
 	sub do_work {
 		my ($prefs, $project_dir) = @_;
 		my ($lbl_a, $lbl_b, $lbl_c) = ($prefs->{a}, $prefs->{b}, $prefs->{c});
@@ -92,7 +97,7 @@ $VERSION = '1.01';
 		}
 		close( SOURCE );
 	}
-	
+
 	1;
 
 =head2 Content of settings file "config.pl"
@@ -141,7 +146,7 @@ passes it to the fat portable part of the program.  There are two bits of data
 that your shim needs to provide: 1. A string having the full real-world path of
 your project root directory; 2. A string having the real-world path separator.
 See the SYNOPSIS for an example.
-	
+
 Then, your main program just needs to assume that the argument it was passed is 
 currently in the virtual root directory and go from there.
 
@@ -379,7 +384,7 @@ sub path {
 	}
 	return( [@{$self->{$KEY_VIR_PATH_ELEM}}] );
 }
-	
+
 ######################################################################
 
 =head2 child_path( CHANGE_VECTOR )
@@ -398,7 +403,7 @@ sub child_path {
 		$self->_path_str_to_ra( $chg_vec ) );
 	return( $self->_simplify_path_ra( $ra_elements ) );
 }
-	
+
 ######################################################################
 
 =head2 child_path_obj( CHANGE_VECTOR )
@@ -689,7 +694,7 @@ sub _simplify_path_ra {
 	my @in = @{$source};  # store source elements here
 	my @mid = ();  # store alphanumeric outputs here
 	my @out = $in[0] eq '' ? shift( @in ) : ();  # make note if absolute or not
-	
+
 	foreach my $part (@in) {
 		$part =~ /[a-zA-Z0-9]/ and push( @mid, $part ) and next;  # keep alpnums
 		$part ne '..' and next;  # skip over "." and the like
@@ -708,16 +713,21 @@ __END__
 
 =head1 AUTHOR
 
-Copyright (c) 1999-2002, Darren R. Duncan. All rights reserved. This module is
-free software; you can redistribute it and/or modify it under the same terms as
-Perl itself.  However, I do request that this copyright information remain
-attached to the file.  If you modify this module and redistribute a changed
-version then please attach a note listing the modifications.
+Copyright (c) 1999-2003, Darren R. Duncan.  All rights reserved.  This module
+is free software; you can redistribute it and/or modify it under the same terms
+as Perl itself.  However, I do request that this copyright information and
+credits remain attached to the file.  If you modify this module and
+redistribute a changed version then please attach a note listing the
+modifications.  This module is available "as-is" and the author can not be held
+accountable for any problems resulting from its use.
 
 I am always interested in knowing how my work helps others, so if you put this
-module to use in any of your own code then please send me the URL. Also, if you
-make modifications to the module because it doesn't work the way you need, please
-send me a copy so that I can roll desirable changes into the main release.
+module to use in any of your own products or services then I would appreciate
+(but not require) it if you send me the website url for said product or
+service, so I know who you are.  Also, if you make non-proprietary changes to
+the module because it doesn't work the way you need, and you are willing to
+make these freely available, then please send me a copy so that I can roll
+desirable changes into the main release.
 
 Address comments, suggestions, and bug reports to B<perl@DarrenDuncan.net>.
 
